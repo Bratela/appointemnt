@@ -1,0 +1,23 @@
+body {
+    font-family: serif;
+    margin: 2em;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0; }
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    vertical-align: center; }
+th {
+    background-color: #f2f2f2;}
+.rekviziti {
+    text-align: center;
+}
+.added-list th{
+    text-align: center;
+}
+.added-list td{
+    text-align:left;
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Display</title>
+    <!-- Подключаем Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- Подключаем Axios для HTTP запросов -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="axios.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+<div id="app" class="container">
+    <div class="table-container">
+        <!-- Поле для поиска -->
+        <input type="text" v-model="searchQuery" placeholder="Поиск...">
+
+        <table>
+            <thead>
+            <tr>
+                <th><input type="checkbox" v-model="selectAll" @change="toggleAll"></th>
+                <th v-for="header in headers" :key="header">{{ header }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(row, index) in filteredRows" :key="index">
+                <td><input type="checkbox" v-model="selectedRows" :value="row"></td>
+                <td v-for="cell in row" :key="cell">{{ cell }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="selected-table">
+        <button class="print-button" @click="printSelectedTable">Print</button>
+        <h3>Форма ввода</h3>
+        <form @submit.prevent="addRow">
+            <label for="firstName">Vārds:   </label>
+            <input type="text" id="firstName" v-model="newRow.firstName" required>
+            <br>
+            <label for="lastName">Uzvārds:</label>
+            <input type="text" id="lastName" v-model="newRow.lastName" required>
+            <br>
+            <label for="personalCode">Pers.Code:</label>
+            <input type="text" id="personalCode" v-model="newRow.personalCode" required>
+            <br>
+            <label for="billsNumber">Čeka numurs:</label>
+            <input type="text" id="billsNumber" v-model="newRow.billsNumber" required>
+            <br>
+            <p></p>
+            <button type="submit">Добавить</button>
+            <p></p>
+        </form>
+        <div class="printable-table">
+            <table class="rekviziti">
+                <tr>
+                    <td>
+                        <p>SIA”Consilium Medicum”</p>
+                        <p>Reģ.nr.40103617104</p>
+                        <p>Rūpniecības iela 7-1, Rīga, LV-1010</p>
+                        <p>Tālr.67505047</p>
+                        <p>Kods: AI 0100-01437</p>
+                    </td>
+                    <td>
+                        <div v-if="submittedRow.firstName || submittedRow.lastName || submittedRow.personalCode">
+                        <h4>{{ submittedRow.firstName }} {{ submittedRow.lastName }} </h4>
+                        <h4>{{submittedRow.personalCode}}</h4>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <h2>Kvīts EKA čekam Nr. {{submittedRow.billsNumber}} </h2>
+            <h2>Datums: {{ new Date().toLocaleDateString('lv')}}</h2>
+        <table class="added-list">
+            <thead>
+            <tr>
+                <th v-for="header in headers" :key="header">{{ header }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(row, index) in selectedRows" :key="index">
+                <td v-for="cell in row" :key="cell">{{ cell }}  </td>
+            </tr>
+            </tbody>
+        </table>
+        <h3>Kopā apmaksai: {{ selectedPrices }} €</h3><br>
+<!--        <p>Summa vārdiem: {{selectedPricesInWords()}}</p>-->
+            Pārdevējs _________________
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
