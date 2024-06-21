@@ -21,3 +21,6 @@ th {
 .added-list td{
     text-align:left;
 }
+.added-list td:nth-child(2){
+    text-align:center;
+}
